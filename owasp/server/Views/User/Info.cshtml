@@ -1,0 +1,20 @@
+@model server.Models.User
+@{
+    ViewData["Title"] = "User Info";
+}
+
+<h2>Create User</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Info</title>
+</head>
+<body>
+    <h1>User Information</h1>
+    <div>
+        <p><strong>Username:</strong> @Model.Username</p>
+        <p><strong>MoreInfo:</strong>@Html.Raw(Model.MoreInfo)</p>
+    </div>
+</body>
+</html>

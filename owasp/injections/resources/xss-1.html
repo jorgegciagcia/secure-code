@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XSS Example</title>
+</head>
+<body>
+    <h1>Welcome!</h1>
+    <p id="message">
+    </p>
+
+    <script>
+        // Imagina que este valor viene de la URL
+        var userInput = window.location.hash.substring(1);
+        var decoded= decodeURIComponent(userInput);
+        var script = document.createElement('script');
+        script.textContent = userInput; // Ejecutar alert
+        document.body.appendChild(script); // Añadir script al body
+    </script>
+</body>
+</html>
