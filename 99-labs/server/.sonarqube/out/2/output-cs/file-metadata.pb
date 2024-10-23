@@ -1,0 +1,11 @@
+_
+T/home/alumno/secure-code/99-labs/server/obj/Debug/net8.0/server.RazorAssemblyInfo.csutf-8Z
+O/home/alumno/secure-code/99-labs/server/obj/Debug/net8.0/server.AssemblyInfo.csutf-8r
+g/home/alumno/secure-code/99-labs/server/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.csutf-8\
+Q/home/alumno/secure-code/99-labs/server/obj/Debug/net8.0/server.GlobalUsings.g.csutf-8;
+2/home/alumno/secure-code/99-labs/server/Program.csutf-8?
+6/home/alumno/secure-code/99-labs/server/Models/User.csutf-8F
+=/home/alumno/secure-code/99-labs/server/Models/TestContext.csutf-8I
+@/home/alumno/secure-code/99-labs/server/Models/ErrorViewModel.csutf-8N
+E/home/alumno/secure-code/99-labs/server/Controllers/UserController.csutf-8N
+E/home/alumno/secure-code/99-labs/server/Controllers/HomeController.csutf-8

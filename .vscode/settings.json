@@ -1,4 +1,8 @@
 {
-    "python.pythonPath": "/home/alumno/curso/bin/python"
+    "python.pythonPath": "/home/alumno/curso/bin/python",
+    "sonarlint.connectedMode.project": {
+      "connectionId": "local-sonarqube",
+      "projectKey": "server"
+    }
   }
   

@@ -1,5 +1,9 @@
 # ADMINSTRACIÓN DE SESIONES
 
+
+
+
+
 ![alt text](image.png)
 
 1. Http no está diseñado para mantener sesiones por lo que hay que idear mecanismos a tal efecto

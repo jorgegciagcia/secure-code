@@ -1,0 +1,4 @@
+{
+    "sonarQubeUri": "http://172.24.231.179:9000",
+    "projectKey": "server"
+}

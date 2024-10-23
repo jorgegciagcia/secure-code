@@ -6,10 +6,10 @@ namespace server.Controllers;
 
 public class UserController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<UserController> _logger;
     private readonly TestContext _context;
 
-    public UserController(ILogger<HomeController> logger, TestContext context)
+    public UserController(ILogger<UserController> logger, TestContext context)
     {
         _logger = logger;
         _context = context;

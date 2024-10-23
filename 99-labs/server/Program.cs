@@ -10,7 +10,8 @@ builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddDbContext<TestContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql("Host=localhost;Database=test;Username=postgres;Password=123abc."));
+    //options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 //only for test porpuses
 
@@ -25,7 +26,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 
-//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -36,4 +36,4 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run("http://0.0ñ.0.0:5000");
+app.Run("http://0.0.0.0:5000");

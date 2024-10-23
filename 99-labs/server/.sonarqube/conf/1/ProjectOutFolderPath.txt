@@ -1,0 +1,1 @@
+/home/alumno/secure-code/99-labs/server/.sonarqube/out/1
