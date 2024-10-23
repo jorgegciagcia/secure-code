@@ -209,10 +209,11 @@ La configuración segura de HTTPS es crucial para proteger la transmisión de da
     - Preferir Forward Secrecy (PFS): Habilita cifrados que ofrezcan Perfect Forward Secrecy (PFS), como ECDHE o DHE, para proteger el tráfico anterior si alguna clave se ve comprometida en el futuro.
 4. HSTS (HTTP Strict Transport Security)
     - Habilitar HSTS: Implementa el encabezado HTTP Strict Transport Security (HSTS) para obligar a los navegadores a interactuar solo a través de HTTPS. Esto previene ataques de tipo "downgrade" donde un atacante intenta forzar una conexión HTTP no segura.
-```conf
-Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-```
-    - Configurar max-age correctamente: El parámetro max-age define cuánto tiempo los navegadores recordarán que el sitio solo debe usar HTTPS. Debe establecerse en un valor elevado (por ejemplo, 1 año).
+
+        `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`
+
+    - Configurar max-age correctamente: El parámetro max-age define cuánto tiempo los navegadores recordarán que el sitio solo debe usar HTTPS Debe establecerse en un valor elevado (por ejemplo, 1 año).
+
 5. Certificados Wildcard y SAN
     - Certificados Wildcard: Son útiles para proteger múltiples subdominios bajo un único dominio, por ejemplo, *.example.com. Esto reduce la complejidad de la gestión de certificados.
     - Certificados SAN (Subject Alternative Name): Permiten asegurar varios dominios y subdominios diferentes en un solo certificado, lo cual es útil en aplicaciones complejas.
@@ -225,7 +226,7 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
     - Deshabilitar renegociación insegura: Asegúrate de que la renegociación SSL esté configurada correctamente para evitar ataques de tipo renegotiation.
     - Configurar el servidor para solo HTTPS: Redireccionar todo el tráfico HTTP a HTTPS, asegurando que ninguna solicitud se procese sin cifrado.
 
-  Ejemplo en nginx:
+    Ejemplo en nginx:
 ```conf
 server {
     listen 80;
