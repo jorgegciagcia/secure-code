@@ -58,28 +58,30 @@ Las credenciales por defecto son: `admin:admin`
 
 ![alt text](image-10.png)
 
-4. En al pantalla *Analysiis Method* Seleccionar *Locally*
-
-![alt text](image-11.png)
-
-5. Generar un token llamado project_token
-
-![alt text](image-12.png)
-
-6. Copiar el contenido del token y pulsar continue
-
-7. Seleccionar el tipo de análisis. En este caso se seleccionará el .NET
-
-![alt text](image-13.png)
-
-8. Seleccionar .NET Core y almacenar los comandos que propone
-
-![alt text](image-14.png)
-
-9. Antes de lanzar análisis, se recomeinda seleccionar el Qyuality Profile:
+4. Antes de lanzar análisis, se recomeinda seleccionar el Qyuality Profile:
 
 ![alt text](image-15.png)
 ![alt text](image-16.png)
+
+
+5. En al pantalla *Analysiis Method* Seleccionar *Locally*
+
+![alt text](image-11.png)
+
+6. Generar un token llamado project_token
+
+![alt text](image-12.png)
+
+7. Copiar el contenido del token y pulsar continue
+
+8. Seleccionar el tipo de análisis. En este caso se seleccionará el .NET
+
+![alt text](image-13.png)
+
+9. Seleccionar .NET Core y almacenar los comandos que propone
+
+![alt text](image-14.png)
+
 
 10. Para que funcione con sonar lint, añadir a la isntancia configurada previamente de *sonarqube* el proyecto que se acaba de crear:
 
@@ -93,4 +95,6 @@ Pulsar en *Share configuration*
 **NOTAS**: *Para visualizar las vulnerabilidades y malas prácticas de seguriad, visualizar la pestaña SECUIRRTY HOSTPOTS de sonarlint*
 
 ![alt text](image-20.png)
+
+![alt text](image-21.png)
 

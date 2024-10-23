@@ -126,12 +126,12 @@
       <Key>S2342</Key>
       <Parameters>
         <Parameter>
-          <Key>flagsAttributeFormat</Key>
-          <Value>^([A-Z]{1,3}[a-z0-9]+)*([A-Z]{2})?s$</Value>
-        </Parameter>
-        <Parameter>
           <Key>format</Key>
           <Value>^([A-Z]{1,3}[a-z0-9]+)*([A-Z]{2})?$</Value>
+        </Parameter>
+        <Parameter>
+          <Key>flagsAttributeFormat</Key>
+          <Value>^([A-Z]{1,3}[a-z0-9]+)*([A-Z]{2})?s$</Value>
         </Parameter>
       </Parameters>
     </Rule>
@@ -279,6 +279,9 @@
     </Rule>
     <Rule>
       <Key>S4211</Key>
+    </Rule>
+    <Rule>
+      <Key>S4212</Key>
     </Rule>
     <Rule>
       <Key>S4456</Key>
@@ -756,6 +759,9 @@
       <Key>S3881</Key>
     </Rule>
     <Rule>
+      <Key>S3884</Key>
+    </Rule>
+    <Rule>
       <Key>S3885</Key>
     </Rule>
     <Rule>
@@ -853,16 +859,16 @@
           <Value>4</Value>
         </Parameter>
         <Parameter>
+          <Key>errorThreshold</Key>
+          <Value>1</Value>
+        </Parameter>
+        <Parameter>
           <Key>warningThreshold</Key>
           <Value>1</Value>
         </Parameter>
         <Parameter>
           <Key>informationThreshold</Key>
           <Value>2</Value>
-        </Parameter>
-        <Parameter>
-          <Key>errorThreshold</Key>
-          <Value>1</Value>
         </Parameter>
       </Parameters>
     </Rule>

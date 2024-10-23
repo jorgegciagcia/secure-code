@@ -1,0 +1,6 @@
+projectKey=server
+serverUrl=http://172.24.231.179:9000
+serverVersion=10.6.0.92116
+dashboardUrl=http://172.24.231.179:9000/dashboard?id=server
+ceTaskId=48ba726f-aec9-42a1-afe9-d91d2f8f31bb
+ceTaskUrl=http://172.24.231.179:9000/api/ce/task?id=48ba726f-aec9-42a1-afe9-d91d2f8f31bb
