@@ -238,3 +238,146 @@ server {
     - Protección contra ataques de tipo BEAST, CRIME, POODLE y Heartbleed: Configurar el servidor y las suites de cifrado para mitigar vulnerabilidades comunes como BEAST (TLS 1.0), CRIME (TLS compression), POODLE (SSLv3) y asegurar que el servidor no sea vulnerable a ataques como Heartbleed.
 10. Evitar Certificados Revocados
     - OCSP Stapling: Habilita OCSP Stapling para que el servidor presente el estado del certificado al cliente, mejorando la seguridad y el rendimiento.
+
+ ##### Ejemplo de configuración completo en nginx
+
+ ```conf
+ http {
+   server_tokens off;
+# store certificate info
+   map  $ssl_client_s_dn  $ssl_client_s_dn_cn {
+      default "";
+      ~CN=(?<CN>[^/,\"]+) $CN;
+   }
+
+##################### server ###########################################
+   server {
+      add_header X-Frame-Options "SAMEORIGIN";
+      ssl_protocols TLSv1.1 TLSv1.2;
+      ssl_prefer_server_ciphers on;
+      ssl_ciphers 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384';
+      add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+      listen 443 ssl;
+      server_name test.local;
+      ssl_certificate /etc/nginx/ana.pem;
+      ssl_certificate_key /etc/nginx/ana.key;
+      ssl_client_certificate /etc/nginx/ca.pem;
+      #ssl_verify_client on;
+      #ssl_verify_depth 2;
+      ssl_crl /etc/nginx/intermediate.crl;
+      set $myhost $http_host;
+
+
+      proxy_http_version 1.1;
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-Ip $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-SSL-CERT $ssl_client_escaped_cert;
+      location / {
+        proxy_redirect ....
+      }
+   }
+ ```
+
+#### Cookies
+
+La configuración segura de las cookies es fundamental para proteger las sesiones de usuario y prevenir ataques como la manipulación de cookies, el robo de sesiones o la divulgación de información sensible. A continuación se describen las mejores prácticas para la seguridad de las cookies:
+
+1. Marcar Cookies como Secure
+
+    Las cookies deben tener el atributo Secure, lo que asegura que solo se envíen a través de conexiones HTTPS encriptadas, evitando que sean interceptadas en conexiones HTTP.
+
+    `Set-Cookie: sessionId=abc123; Secure`
+
+2. Usar el Atributo HttpOnly
+    El atributo HttpOnly impide que las cookies sean accesibles desde el código JavaScript en el navegador, protegiéndolas de ataques de cross-site scripting (XSS).
+
+    `Set-Cookie: sessionId=abc123; HttpOnly`
+
+3. Implementar el Atributo SameSite
+    El atributo SameSite ayuda a prevenir ataques de cross-site request forgery (CSRF) al limitar el envío de cookies a solicitudes de origen cruzado. Este atributo puede tomar tres valores:
+        -SameSite=Strict: La cookie solo se envía en solicitudes que provienen del mismo dominio (máxima protección).
+        - SameSite=Lax: La cookie se envía en solicitudes de navegación de origen cruzado, pero no en sub-requests como imágenes o iframes.
+        - SameSite=None; Secure: La cookie se envía en todas las solicitudes de origen cruzado, pero solo en conexiones seguras (HTTPS).
+
+    `Set-Cookie: sessionId=abc123; SameSite=Lax`
+
+4. Establecer un Tiempo de Expiración Adecuado
+    Las cookies deben tener un tiempo de expiración adecuado utilizando el atributo Expires o Max-Age. Esto evita que las cookies persistan indefinidamente y asegura que las sesiones expiren después de un período razonable de inactividad.
+
+    `Set-Cookie: sessionId=abc123; Expires=Wed, 21 Oct 2025 07:28:00 GMT`
+
+5. Usar Cookies de Sesión Cuando Sea Posible
+    Para evitar la persistencia innecesaria de cookies, utiliza cookies de sesión (que se eliminan cuando el navegador se cierra) para datos sensibles como identificadores de sesión. Estas cookies no requieren un atributo Expires o Max-Age.
+
+6. Configurar Cookies para Dominios y Rutas Específicas
+    Las cookies deben estar restringidas a un dominio y una ruta específicos mediante los atributos Domain y Path. Esto reduce la exposición de la cookie y evita que sea enviada innecesariamente a diferentes partes del sitio web o a subdominios no deseados.
+
+    `Set-Cookie: sessionId=abc123; Domain=example.com; Path=/account`
+
+7. Evitar Almacenar Información Sensible en Cookies
+    Nunca almacenes información sensible como contraseñas, datos personales o detalles de tarjetas de crédito en las cookies. Usa identificadores únicos y almacena los datos sensibles en el servidor.
+8. Habilitar el Cifrado de los Contenidos de las Cookies
+    Si es necesario almacenar datos confidenciales en las cookies, asegúrate de que estén cifrados antes de almacenarlos. El cifrado asegura que incluso si la cookie es interceptada o manipulada, los datos sensibles no sean legibles.
+9. Rotación de Cookies
+    Para sesiones largas, es recomendable rotar los identificadores de sesión periódicamente o tras eventos críticos como la autenticación del usuario, para evitar el uso prolongado de una misma cookie y reducir la posibilidad de robo de sesión.
+10. Protección Contra el Secuestro de Sesiones
+    Asegúrate de que las cookies de sesión cambien cuando se cambia el contexto del usuario (por ejemplo, después del inicio de sesión) y cuando haya signos de manipulación o actividad sospechosa en la sesión.
+11. Monitoreo y Alerta
+    Implementa sistemas de monitoreo que detecten actividades sospechosas relacionadas con las cookies, como intentos de manipulación o duplicación de cookies.
+
+    ##### Configuración en C#
+
+    **Cookie de identidad**
+
+    ```C#
+    services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            // Nombre de la cookie
+            options.Cookie.Name = "Auth";
+            // Requerir HTTPS para la cookie
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            // Marcar la cookie como HttpOnly para evitar acceso desde JavaScript
+            options.Cookie.HttpOnly = true;
+            // Establecer SameSite para proteger contra CSRF
+            options.Cookie.SameSite = SameSiteMode.Strict;
+            // Establecer un tiempo de expiración para la cookie
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+            // La cookie se renueva si el usuario sigue interactuando
+            options.SlidingExpiration = true;
+            // Redirigir al usuario a la página de inicio de sesión si no está autenticado
+            options.LoginPath = "/Account/Login";
+            // Redirigir al usuario a una página de acceso denegado si no tiene permiso
+            options.AccessDeniedPath = "/Account/AccessDenied";
+            // definir el dominio para *.test.com, por ejemplo
+            opitons.Cookie.Domain = ".test.com"; 
+        });
+    ```
+    
+    **Cookie de sesión**
+
+    ```C#
+        services.AddSession(options =>
+        {
+           // Nombre de la cookie
+            options.Cookie.Name = "Session";
+            // Requerir HTTPS para la cookie
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            // Marcar la cookie como HttpOnly para evitar acceso desde JavaScript
+            options.Cookie.HttpOnly = true;
+            // Establecer SameSite para proteger contra CSRF
+            options.Cookie.SameSite = SameSiteMode.Strict;
+            // Establecer un tiempo de expiración para la cookie
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(120);
+            // La cookie se renueva si el usuario sigue interactuando
+            options.SlidingExpiration = true;
+            // Redirigir al usuario a la página de inicio de sesión si no está autenticado
+            options.LoginPath = "/Account/Login";
+            // Redirigir al usuario a una página de acceso denegado si no tiene permiso
+            options.AccessDeniedPath = "/Account/AccessDenied";
+            // definir el dominio para *.test.com, por ejemplo
+            opitons.Cookie.Domain = ".test.com"; 
+        });
+    ```
+    
